@@ -1,12 +1,10 @@
 package info.andchelp.fitwf.model;
 
 import lombok.*;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Setter
 @Getter
@@ -26,9 +24,11 @@ public class User extends AbstractEntity implements UserDetails {
     @Column(nullable = false, length = 60)
     String password;
 
+    @Builder.Default
     @Column(nullable = false)
-    boolean activated = false;
+    boolean emailVerified = false;
 
+    @Builder.Default
     @Column(nullable = false)
     boolean enabled = true;
 
@@ -42,10 +42,8 @@ public class User extends AbstractEntity implements UserDetails {
     Set<Role> authorities;
 
     @Override
-    public Set<SimpleGrantedAuthority> getAuthorities() {
-        return authorities.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getType().name()))
-                .collect(Collectors.toSet());
+    public Set<Role> getAuthorities() {
+        return authorities;
     }
 
     @Override

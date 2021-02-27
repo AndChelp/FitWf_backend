@@ -10,4 +10,8 @@ public class NotFoundException extends AbstractException {
     public static NotFoundException ofUser() {
         return new NotFoundException(ExceptionType.USER_NOT_FOUND);
     }
+
+    public static NotFoundException ofCode() {
+        return new NotFoundException(ExceptionType.CODE_NOT_FOUND);
+    }
 }

@@ -1,10 +1,12 @@
 package info.andchelp.fitwf.service;
 
 import info.andchelp.fitwf.exception.IllegalArgumentException;
+import info.andchelp.fitwf.exception.NotFoundException;
 import info.andchelp.fitwf.model.Code;
 import info.andchelp.fitwf.model.User;
 import info.andchelp.fitwf.model.enums.CodeType;
 import info.andchelp.fitwf.repository.CodeRepository;
+import info.andchelp.fitwf.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -16,13 +18,23 @@ import java.util.UUID;
 public class CodeService {
 
     final CodeRepository codeRepository;
+    final UserRepository userRepository;
 
-    public CodeService(CodeRepository codeRepository) {
+    public CodeService(CodeRepository codeRepository, UserRepository userRepository) {
         this.codeRepository = codeRepository;
+        this.userRepository = userRepository;
     }
 
-    public Code emailVerifyCode(User user) {
-        if (user.isActivated()) {
+    public void verifyCode(UUID code) {
+        Code retrievedCode = codeRepository.findByCode(code).orElseThrow(NotFoundException::ofCode);
+        User user = retrievedCode.getUser();
+        user.setEmailVerified(true);
+        userRepository.save(user);
+        codeRepository.delete(retrievedCode);
+    }
+
+    public Code emailVerificationCode(User user) {
+        if (user.isEmailVerified()) {
             throw IllegalArgumentException.ofMailVerify(user.getUsername());
         }
         return codeFor(user, CodeType.EMAIL_VERIFY, Duration.ofDays(5));

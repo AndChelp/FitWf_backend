@@ -50,10 +50,10 @@ public class AuthService implements UserDetailsService {
                 .authority(roleRepository.findByType(RoleType.ROLE_USER).orElseThrow())
                 .build());
 
-        Code code = codeService.emailVerifyCode(user);
+        Code code = codeService.emailVerificationCode(user);
         mailService.sendSimpleMessage(user.getEmail(), "Verify your email",
                 "Click link below to verify your email and get all capabilities of FitWF!\n" +
-                        "http://localhost:8080/api/public/verify/" + code.getCode() +
+                        "http://localhost:8080/api/public/verify?code=" + code.getCode() +
                         "\n-----------------------------------------------------------------------------\n" +
                         "Если вы получили это сообщение, вероятно это мой косяк. Можете спокойно удалить это.");
     }

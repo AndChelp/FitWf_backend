@@ -12,6 +12,7 @@ public enum ExceptionType {
     EMAIL_AND_USERNAME_EXISTS("email.and.username.exists"),
 
     USER_NOT_FOUND("user.not.found"),
+    CODE_NOT_FOUND("code.not.found"),
 
     USER_IS_VERIFIED("user.is.verified"),
     ;
