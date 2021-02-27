@@ -14,5 +14,5 @@ public enum ExceptionType {
     USER_NOT_FOUND("user.not.found"),
     ;
 
-    private final String dictionaryCode;
+    final String dictionaryCode;
 }

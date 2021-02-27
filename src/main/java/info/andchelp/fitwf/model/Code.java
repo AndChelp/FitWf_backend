@@ -14,15 +14,15 @@ import java.util.UUID;
 @Table(name = "codes")
 public class Code extends AbstractEntity {
     @ManyToOne
-    private User user;
+    User user;
 
     @Column(unique = true, nullable = false)
-    private UUID code;
+    UUID code;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private CodeType type;
+    CodeType type;
 
     @Column(nullable = false)
-    private Timestamp expires_at;
+    Timestamp expires_at;
 }

@@ -10,24 +10,30 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final AuthService authService;
+    final AuthService authService;
 
     public SecurityConfig(AuthService authService) {
         this.authService = authService;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .userDetailsService(authService)
-                .passwordEncoder(NoOpPasswordEncoder.getInstance());
+                .passwordEncoder(passwordEncoder());
     }
 
     @Bean

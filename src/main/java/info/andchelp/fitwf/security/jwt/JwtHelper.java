@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class JwtHelper {
     @Value("${jwt.token.secret}")
-    private String jwtSecret;
+    String jwtSecret;
 
     private String getJwt(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");

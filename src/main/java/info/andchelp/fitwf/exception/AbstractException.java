@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 public abstract class AbstractException extends RuntimeException {
-    private final ExceptionType type;
+    final ExceptionType type;
 
     public AbstractException(ExceptionType type) {
         super(type.getDictionaryCode());

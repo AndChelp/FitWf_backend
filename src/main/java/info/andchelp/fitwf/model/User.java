@@ -1,7 +1,6 @@
 package info.andchelp.fitwf.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,47 +10,36 @@ import java.util.stream.Collectors;
 
 @Setter
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "users")
 public class User extends AbstractEntity implements UserDetails {
 
     @Column(updatable = false, nullable = false, unique = true)
-    private String username;
+    String username;
 
     @Column(unique = true, nullable = false)
-    private String email;
+    String email;
 
     @Column(nullable = false, length = 60)
-    private String password;
+    String password;
 
     @Column(nullable = false)
-    private boolean activated = false;
+    boolean activated = false;
 
     @Column(nullable = false)
-    private boolean enabled = true;
+    boolean enabled = true;
 
+    @Singular
     @ManyToMany
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     @Column(nullable = false)
-    private Set<Role> authorities;
-
-    @Override
-    public String getPassword() {
-        return this.password;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.username;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return this.enabled;
-    }
+    Set<Role> authorities;
 
     @Override
     public Set<SimpleGrantedAuthority> getAuthorities() {
