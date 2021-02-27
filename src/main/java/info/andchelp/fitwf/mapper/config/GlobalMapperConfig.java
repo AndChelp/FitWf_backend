@@ -1,4 +1,4 @@
-package info.andchelp.fitwf.api.mapper.config;
+package info.andchelp.fitwf.mapper.config;
 
 import org.mapstruct.CollectionMappingStrategy;
 import org.mapstruct.MapperConfig;

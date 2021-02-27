@@ -1,4 +1,4 @@
-package info.andchelp.fitwf.api.dto;
+package info.andchelp.fitwf.dto;
 
 import lombok.Getter;
 import lombok.Setter;

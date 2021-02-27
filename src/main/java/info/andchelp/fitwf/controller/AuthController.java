@@ -1,6 +1,6 @@
-package info.andchelp.fitwf.api.controller;
+package info.andchelp.fitwf.controller;
 
-import info.andchelp.fitwf.api.dto.SignUpDto;
+import info.andchelp.fitwf.dto.SignUpDto;
 import info.andchelp.fitwf.service.AuthService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

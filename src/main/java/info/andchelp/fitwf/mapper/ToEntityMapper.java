@@ -1,4 +1,4 @@
-package info.andchelp.fitwf.api.mapper;
+package info.andchelp.fitwf.mapper;
 
 import java.util.Collection;
 
