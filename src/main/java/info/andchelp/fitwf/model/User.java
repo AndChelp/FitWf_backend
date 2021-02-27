@@ -12,11 +12,8 @@ import java.util.stream.Collectors;
 @Setter
 @Getter
 @Entity
-@Table(name = "user")
-public class User implements UserDetails {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+@Table(name = "users")
+public class User extends AbstractEntity implements UserDetails {
 
     @Column(updatable = false, nullable = false, unique = true)
     private String username;
@@ -28,12 +25,17 @@ public class User implements UserDetails {
     private String password;
 
     @Column(nullable = false)
-    private boolean activated;
+    private boolean activated = false;
 
     @Column(nullable = false)
     private boolean enabled = true;
 
     @ManyToMany
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    @Column(nullable = false)
     private Set<Role> authorities;
 
     @Override

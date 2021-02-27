@@ -1,4 +1,4 @@
-package info.andchelp.fitwf.controller;
+package info.andchelp.fitwf.api.controller;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
