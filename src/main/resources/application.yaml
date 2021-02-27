@@ -20,6 +20,22 @@ spring:
           lob:
             non_contextual_creation: true
 
+  mail:
+    host: smtp.yandex.ru
+    port: 465
+    username: dsfsaegf@yandex.ru
+    password: juxducmchucpbfsc
+    properties:
+      mail:
+        transport:
+          protocol: smtp
+        smtp:
+          ssl:
+            enable: true
+          auth: true
+          starttls:
+            enable: true
+
 jwt:
   token:
     secret: secret

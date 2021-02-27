@@ -3,7 +3,7 @@ package info.andchelp.fitwf.exception;
 import info.andchelp.fitwf.exception.enums.ExceptionType;
 
 public class NotFoundException extends AbstractException {
-    public NotFoundException(ExceptionType type) {
+    private NotFoundException(ExceptionType type) {
         super(type);
     }
 

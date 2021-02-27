@@ -1,6 +1,8 @@
 package info.andchelp.fitwf.model;
 
 import info.andchelp.fitwf.model.enums.CodeType;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +12,8 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 @Entity
 @Table(name = "codes")
 public class Code extends AbstractEntity {

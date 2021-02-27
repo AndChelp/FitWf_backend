@@ -6,8 +6,8 @@ import java.util.Map;
 
 public class DuplicateException extends DetailedException {
 
-    public DuplicateException(ExceptionType type, Map<String, Object> values) {
-        super(type, values);
+    private DuplicateException(ExceptionType type, Map<String, Object> details) {
+        super(type, details);
     }
 
     public static DuplicateException ofEmailAndUsername(String email, String username) {
