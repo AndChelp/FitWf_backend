@@ -10,7 +10,6 @@ import info.andchelp.fitwf.model.User;
 import info.andchelp.fitwf.model.enums.RoleType;
 import info.andchelp.fitwf.repository.RoleRepository;
 import info.andchelp.fitwf.repository.UserRepository;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +29,7 @@ public class AuthService {
     final RoleRepository roleRepository;
 
 
-    public AuthService(@Lazy PasswordEncoder passwordEncoder, UserRepository userRepository,
+    public AuthService(PasswordEncoder passwordEncoder, UserRepository userRepository,
                        RoleRepository roleRepository, MailService mailService, CodeService codeService, JwtService jwtService) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -53,17 +52,17 @@ public class AuthService {
 
         mailService.sendSimpleMessage(user.getEmail(), "Verify your email",
                 "Click link below to verify your email and get all capabilities of FitWF!\n" +
-                        "http://localhost:8080/api/public/verify?code=" + code.getCode() +
+                        "http://localhost:8080/api/public/code/verify?code=" + code.getCode() +
                         "\n-----------------------------------------------------------------------------\n" +
                         "Если вы получили это сообщение, вероятно это мой косяк. Можете спокойно удалить письмо.");
-        return new Tokens(jwtService.generateAccessToken(user), UUID.randomUUID());
+        return new Tokens(jwtService.generateToken(user), UUID.randomUUID());
     }
 
     public Tokens signIn(SignInDto signInDto) {
         User user = userRepository.findByUsername(signInDto.getUsername())
                 .filter(u -> passwordEncoder.matches(signInDto.getPassword(), u.getPassword()))
                 .orElseThrow(AccessDeniedException::ofUsernameOrPassword);
-        return new Tokens(jwtService.generateAccessToken(user), UUID.randomUUID());
+        return new Tokens(jwtService.generateToken(user), UUID.randomUUID());
     }
 
     private void checkIfExists(SignUpDto signUpDto) {
@@ -76,5 +75,9 @@ public class AuthService {
         } else if (existsByUsername) {
             throw DuplicateException.ofUsername(signUpDto.getEmail());
         }
+    }
+
+    public void signOut() {
+        //FitWfSecurityContext.getUser()
     }
 }

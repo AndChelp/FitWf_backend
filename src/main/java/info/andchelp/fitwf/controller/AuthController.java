@@ -17,8 +17,6 @@ public class AuthController {
         this.authService = authService;
     }
 
-
-
     @PostMapping("/signin")
     public ResponseEntity<Response> signIn(@RequestBody SignInDto signInDto) {
         return Response.of(authService.signIn(signInDto));

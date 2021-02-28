@@ -3,9 +3,12 @@ package info.andchelp.fitwf.service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import info.andchelp.fitwf.exception.AccessDeniedException;
 import info.andchelp.fitwf.model.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
@@ -14,26 +17,19 @@ import java.util.Date;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@Component
+@Service
 public class JwtService {
     @Value("${jwt.token.secret}")
     String jwtSecret;
 
-    /* public String getUsernameFromJwtToken(String token) {
-         return Jwts.parser()
-                 .setSigningKey(jwtSecret)
-                 .parseClaimsJws(token)
-                 .getBody().getSubject();
-     }*/
-
-    private String getJwt(HttpServletRequest request) {
+    public String extractToken(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
         if (authHeader != null && authHeader.startsWith("Bearer "))
             return authHeader.replace("Bearer ", "");
         return null;
     }
 
-    public String generateAccessToken(User user) {
+    public String generateToken(User user) {
         return "Bearer " + JWT.create()
                 .withJWTId(UUID.randomUUID().toString())
                 .withSubject(user.getUsername())
@@ -48,8 +44,8 @@ public class JwtService {
                 .sign(Algorithm.HMAC512(jwtSecret));
     }
 
-    public DecodedJWT validateJwtToken(String authToken) {
+    public DecodedJWT validateToken(String token) {
         return JWT.require(Algorithm.HMAC512(jwtSecret)).build()
-                .verify(authToken);
+                .verify(token);
     }
 }

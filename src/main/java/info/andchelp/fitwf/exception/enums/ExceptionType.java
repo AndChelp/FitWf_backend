@@ -16,7 +16,8 @@ public enum ExceptionType {
 
     USER_IS_VERIFIED("user.is.verified"),
 
-    INVALID_USERNAME_OR_PASSWORD("invalid.username.or.password")
+    INVALID_USERNAME_OR_PASSWORD("invalid.username.or.password"),
+    INVALID_TOKEN("invalid.token")
     ;
     final String dictionaryCode;
 }
