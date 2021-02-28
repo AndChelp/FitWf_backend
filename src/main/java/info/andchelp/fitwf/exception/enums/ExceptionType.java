@@ -15,7 +15,8 @@ public enum ExceptionType {
     CODE_NOT_FOUND("code.not.found"),
 
     USER_IS_VERIFIED("user.is.verified"),
-    ;
 
+    INVALID_USERNAME_OR_PASSWORD("invalid.username.or.password")
+    ;
     final String dictionaryCode;
 }

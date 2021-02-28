@@ -1,12 +1,11 @@
-package info.andchelp.fitwf.dto;
+package info.andchelp.fitwf.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class SignUpDto {
-    String email;
+public class SignInDto {
     String username;
     String password;
 }

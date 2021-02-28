@@ -4,7 +4,9 @@ import lombok.*;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Setter
 @Getter
@@ -41,9 +43,10 @@ public class User extends AbstractEntity implements UserDetails {
     @Column(nullable = false)
     Set<Role> authorities;
 
-    @Override
-    public Set<Role> getAuthorities() {
-        return authorities;
+    public List<String> getAuthorityNames() {
+        return authorities.stream()
+                .map(role -> role.getType().name())
+                .collect(Collectors.toList());
     }
 
     @Override

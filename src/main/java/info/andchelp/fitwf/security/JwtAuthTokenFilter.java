@@ -1,4 +1,4 @@
-package info.andchelp.fitwf.security.jwt;
+package info.andchelp.fitwf.security;
 
 import org.springframework.web.filter.OncePerRequestFilter;
 
