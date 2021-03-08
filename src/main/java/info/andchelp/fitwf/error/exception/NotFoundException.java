@@ -1,6 +1,6 @@
-package info.andchelp.fitwf.exception;
+package info.andchelp.fitwf.error.exception;
 
-import info.andchelp.fitwf.exception.enums.ExceptionType;
+import info.andchelp.fitwf.error.enums.ExceptionType;
 
 public class NotFoundException extends AbstractException {
     private NotFoundException(ExceptionType type) {

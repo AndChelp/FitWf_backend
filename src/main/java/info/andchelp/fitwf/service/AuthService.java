@@ -2,9 +2,9 @@ package info.andchelp.fitwf.service;
 
 import info.andchelp.fitwf.dto.request.SignInDto;
 import info.andchelp.fitwf.dto.request.SignUpDto;
-import info.andchelp.fitwf.dto.response.Tokens;
-import info.andchelp.fitwf.exception.AccessDeniedException;
-import info.andchelp.fitwf.exception.DuplicateException;
+import info.andchelp.fitwf.dto.response.TokensDto;
+import info.andchelp.fitwf.error.exception.AccessDeniedException;
+import info.andchelp.fitwf.error.exception.DuplicateException;
 import info.andchelp.fitwf.model.Code;
 import info.andchelp.fitwf.model.User;
 import info.andchelp.fitwf.model.enums.RoleType;
@@ -39,7 +39,7 @@ public class AuthService {
         this.jwtService = jwtService;
     }
 
-    public Tokens signUp(SignUpDto signUpDto) {
+    public TokensDto signUp(SignUpDto signUpDto) {
         checkIfExists(signUpDto);
         User user = userRepository.save(User.builder()
                 .email(signUpDto.getEmail())
@@ -55,14 +55,14 @@ public class AuthService {
                         "http://localhost:8080/api/public/code/verify?code=" + code.getCode() +
                         "\n-----------------------------------------------------------------------------\n" +
                         "Если вы получили это сообщение, вероятно это мой косяк. Можете спокойно удалить письмо.");
-        return new Tokens(jwtService.generateToken(user), UUID.randomUUID());
+        return new TokensDto(jwtService.generateToken(user), UUID.randomUUID());
     }
 
-    public Tokens signIn(SignInDto signInDto) {
+    public TokensDto signIn(SignInDto signInDto) {
         User user = userRepository.findByUsername(signInDto.getUsername())
                 .filter(u -> passwordEncoder.matches(signInDto.getPassword(), u.getPassword()))
                 .orElseThrow(AccessDeniedException::ofUsernameOrPassword);
-        return new Tokens(jwtService.generateToken(user), UUID.randomUUID());
+        return new TokensDto(jwtService.generateToken(user), UUID.randomUUID());
     }
 
     private void checkIfExists(SignUpDto signUpDto) {

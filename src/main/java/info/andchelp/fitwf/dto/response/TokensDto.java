@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
-public class Tokens {
+public class TokensDto {
     String accessToken;
     UUID refreshToken;
 }

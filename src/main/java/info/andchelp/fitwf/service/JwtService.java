@@ -3,12 +3,9 @@ package info.andchelp.fitwf.service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import info.andchelp.fitwf.exception.AccessDeniedException;
 import info.andchelp.fitwf.model.User;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;

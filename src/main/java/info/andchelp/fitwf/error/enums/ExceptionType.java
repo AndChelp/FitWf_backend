@@ -1,4 +1,4 @@
-package info.andchelp.fitwf.exception.enums;
+package info.andchelp.fitwf.error.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ public enum ExceptionType {
     USER_IS_VERIFIED("user.is.verified"),
 
     INVALID_USERNAME_OR_PASSWORD("invalid.username.or.password"),
-    INVALID_TOKEN("invalid.token")
+    INVALID_TOKEN("invalid.token"),
     ;
     final String dictionaryCode;
 }

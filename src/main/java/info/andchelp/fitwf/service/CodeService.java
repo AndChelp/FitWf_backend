@@ -1,7 +1,7 @@
 package info.andchelp.fitwf.service;
 
-import info.andchelp.fitwf.exception.IllegalArgumentException;
-import info.andchelp.fitwf.exception.NotFoundException;
+import info.andchelp.fitwf.error.exception.IllegalArgumentException;
+import info.andchelp.fitwf.error.exception.NotFoundException;
 import info.andchelp.fitwf.model.Code;
 import info.andchelp.fitwf.model.User;
 import info.andchelp.fitwf.model.enums.CodeType;
