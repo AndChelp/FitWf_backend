@@ -1,7 +1,6 @@
 package info.andchelp.fitwf.controller;
 
 import info.andchelp.fitwf.service.AuthService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

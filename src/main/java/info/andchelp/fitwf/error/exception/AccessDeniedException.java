@@ -10,6 +10,7 @@ public class AccessDeniedException extends AbstractException {
     public static AccessDeniedException ofUsernameOrPassword() {
         return new AccessDeniedException(ExceptionType.INVALID_USERNAME_OR_PASSWORD);
     }
+
     public static AccessDeniedException ofToken() {
         return new AccessDeniedException(ExceptionType.INVALID_TOKEN);
     }

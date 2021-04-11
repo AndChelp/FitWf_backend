@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum ExceptionType {
+    DEFAULT("default"),
+
     DUPLICATED_VALUE("duplicated.value"),
     USERNAME_EXISTS("username.exists"),
     EMAIL_EXISTS("email.exists"),
@@ -20,4 +22,8 @@ public enum ExceptionType {
     INVALID_TOKEN("invalid.token"),
     ;
     final String dictionaryCode;
+
+    public String translateException() {
+        return "";
+    }
 }

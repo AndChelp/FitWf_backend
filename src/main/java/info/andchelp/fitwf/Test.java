@@ -28,7 +28,9 @@ public class Test {
         String jwtToken = generateJwtToken(user);
 
         System.out.println(validateJwtToken(jwtToken));
-    }public static DecodedJWT validateJwtToken(String authToken) {
+    }
+
+    public static DecodedJWT validateJwtToken(String authToken) {
         return JWT.require(Algorithm.HMAC512(secret)).build()
                 .verify(authToken);
     }
