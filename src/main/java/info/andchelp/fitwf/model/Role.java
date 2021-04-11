@@ -1,19 +1,23 @@
 package info.andchelp.fitwf.model;
 
+import info.andchelp.fitwf.model.enums.RoleType;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Getter
 @Setter
+@Getter
 @Entity
-public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private String role;
+@Table(name = "roles")
+public class Role extends AbstractEntity implements GrantedAuthority {
+    @Column(nullable = false, updatable = false, unique = true)
+    @Enumerated(EnumType.STRING)
+    RoleType type;
+
+    @Override
+    public String getAuthority() {
+        return type.name();
+    }
 }

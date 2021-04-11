@@ -1,61 +1,52 @@
 package info.andchelp.fitwf.model;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import lombok.*;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Setter
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "user")
-public class User implements UserDetails {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+@Table(name = "users")
+public class User extends AbstractEntity implements UserDetails {
 
     @Column(updatable = false, nullable = false, unique = true)
-    private String username;
+    String username;
 
     @Column(unique = true, nullable = false)
-    private String email;
+    String email;
 
     @Column(nullable = false, length = 60)
-    private String password;
+    String password;
 
+    @Builder.Default
     @Column(nullable = false)
-    private boolean activated;
+    boolean emailVerified = false;
 
+    @Builder.Default
     @Column(nullable = false)
-    private boolean enabled = true;
+    boolean enabled = true;
 
+    @Singular
     @ManyToMany
-    private Set<Role> authorities;
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    @Column(nullable = false)
+    Set<Role> authorities;
 
-    @Override
-    public String getPassword() {
-        return this.password;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.username;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return this.enabled;
-    }
-
-    @Override
-    public Set<SimpleGrantedAuthority> getAuthorities() {
+    public List<String> getAuthorityNames() {
         return authorities.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getRole()))
-                .collect(Collectors.toSet());
+                .map(role -> role.getType().name())
+                .collect(Collectors.toList());
     }
 
     @Override
