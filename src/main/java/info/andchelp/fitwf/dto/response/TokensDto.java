@@ -8,6 +8,6 @@ import java.util.UUID;
 @Getter
 @AllArgsConstructor
 public class TokensDto {
-    String accessToken;
-    UUID refreshToken;
+    private final String accessToken;
+    private final UUID refreshToken;
 }

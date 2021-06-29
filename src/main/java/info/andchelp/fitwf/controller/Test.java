@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class Test {
 
-    final MailService mailService;
+    private final MailService mailService;
 
     public Test(MailService mailService) {
         this.mailService = mailService;

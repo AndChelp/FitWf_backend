@@ -8,9 +8,9 @@ import java.sql.Timestamp;
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseDto {
-    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+    private final Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-    Object result;
+    private final Object result;
 
     public static ResponseDto of(Object value) {
         return new ResponseDto(value);

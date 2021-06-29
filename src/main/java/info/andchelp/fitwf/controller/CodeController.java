@@ -11,7 +11,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/public/code")
 public class CodeController {
-    final CodeService codeService;
+    private final CodeService codeService;
 
     public CodeController(CodeService codeService) {
         this.codeService = codeService;

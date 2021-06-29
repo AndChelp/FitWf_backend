@@ -10,9 +10,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ExceptionDto {
-    ExceptionType type;
-    String message;
-    String klass;
+    private ExceptionType type;
+    private String message;
+    private String klass;
 
     public static ExceptionDto of(ExceptionType type) {
         return of(type, type.translateException());

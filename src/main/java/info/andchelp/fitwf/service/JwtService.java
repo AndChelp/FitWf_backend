@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @Service
 public class JwtService {
     @Value("${jwt.token.secret}")
-    String jwtSecret;
+    private String jwtSecret;
 
     public String extractToken(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");

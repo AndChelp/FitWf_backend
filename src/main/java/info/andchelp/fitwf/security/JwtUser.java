@@ -8,10 +8,10 @@ import java.security.Principal;
 @Getter
 @Builder
 public class JwtUser implements Principal {
-    long id;
-    String name;
-    String email;
-    boolean emailVerified;
+    private final long id;
+    private final String name;
+    private final String email;
+    private final boolean emailVerified;
 
     @Override
     public String getName() {
