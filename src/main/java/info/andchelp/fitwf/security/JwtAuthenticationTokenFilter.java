@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
-    final JwtService jwtService;
+    private final JwtService jwtService;
 
     public JwtAuthenticationTokenFilter(JwtService jwtService) {
         this.jwtService = jwtService;

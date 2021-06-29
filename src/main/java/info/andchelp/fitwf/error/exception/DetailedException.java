@@ -7,7 +7,7 @@ import java.util.Map;
 
 @Getter
 public abstract class DetailedException extends AbstractException {
-    final Map<String, Object> details;
+    private final Map<String, Object> details;
 
     public DetailedException(ExceptionType type, Map<String, Object> details) {
         super(type);

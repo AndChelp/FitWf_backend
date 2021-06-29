@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
-    final AuthService authService;
+    private final AuthService authService;
 
     public UserController(AuthService authService) {
         this.authService = authService;

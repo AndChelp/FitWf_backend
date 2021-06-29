@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Role extends AbstractEntity implements GrantedAuthority {
     @Column(nullable = false, updatable = false, unique = true)
     @Enumerated(EnumType.STRING)
-    RoleType type;
+    private RoleType type;
 
     @Override
     public String getAuthority() {

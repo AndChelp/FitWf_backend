@@ -17,8 +17,8 @@ import java.util.UUID;
 @Service
 public class CodeService {
 
-    final CodeRepository codeRepository;
-    final UserRepository userRepository;
+    private final CodeRepository codeRepository;
+    private final UserRepository userRepository;
 
     public CodeService(CodeRepository codeRepository, UserRepository userRepository) {
         this.codeRepository = codeRepository;

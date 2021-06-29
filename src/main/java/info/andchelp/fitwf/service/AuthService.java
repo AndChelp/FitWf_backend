@@ -19,14 +19,14 @@ import java.util.UUID;
 public class AuthService {
 
 
-    final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    final MailService mailService;
-    final CodeService codeService;
-    final JwtService jwtService;
+    private final MailService mailService;
+    private final CodeService codeService;
+    private final JwtService jwtService;
 
-    final UserRepository userRepository;
-    final RoleRepository roleRepository;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
 
     public AuthService(PasswordEncoder passwordEncoder, UserRepository userRepository,

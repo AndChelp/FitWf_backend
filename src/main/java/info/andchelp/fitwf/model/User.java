@@ -18,21 +18,21 @@ import java.util.stream.Collectors;
 public class User extends AbstractEntity implements UserDetails {
 
     @Column(updatable = false, nullable = false, unique = true)
-    String username;
+    private String username;
 
     @Column(unique = true, nullable = false)
-    String email;
+    private String email;
 
     @Column(nullable = false, length = 60)
-    String password;
+    private String password;
 
     @Builder.Default
     @Column(nullable = false)
-    boolean emailVerified = false;
+    private boolean emailVerified = false;
 
     @Builder.Default
     @Column(nullable = false)
-    boolean enabled = true;
+    private boolean enabled = true;
 
     @Singular
     @ManyToMany
@@ -41,7 +41,7 @@ public class User extends AbstractEntity implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     @Column(nullable = false)
-    Set<Role> authorities;
+    private Set<Role> authorities;
 
     public List<String> getAuthorityNames() {
         return authorities.stream()
