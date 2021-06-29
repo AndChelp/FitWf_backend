@@ -26,5 +26,5 @@ public class Code extends AbstractEntity {
     private CodeType type;
 
     @Column(nullable = false)
-    private Timestamp expires_at;
+    private Timestamp expiresAt;
 }

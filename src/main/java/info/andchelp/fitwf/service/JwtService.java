@@ -33,9 +33,6 @@ public class JwtService {
                 .withClaim("userId", user.getId())
                 .withClaim("email", user.getEmail())
                 .withClaim("emailVerified", user.isEmailVerified())
-                .withClaim("authorities", user.getAuthorities().stream()
-                        .map(role -> role.getType().name())
-                        .collect(Collectors.toList()))
                 .withClaim("refreshToken", UUID.randomUUID().toString())
                 .withExpiresAt(Date.from(Instant.now().plus(Duration.ofMinutes(30))))
                 .sign(Algorithm.HMAC512(jwtSecret));

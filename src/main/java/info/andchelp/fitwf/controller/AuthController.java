@@ -1,7 +1,7 @@
 package info.andchelp.fitwf.controller;
 
-import info.andchelp.fitwf.dto.request.SignInDto;
-import info.andchelp.fitwf.dto.request.SignUpDto;
+import info.andchelp.fitwf.dto.request.LoginDto;
+import info.andchelp.fitwf.dto.request.RegisterDto;
 import info.andchelp.fitwf.dto.response.ResponseDto;
 import info.andchelp.fitwf.service.AuthService;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +20,13 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @PostMapping("/signin")
-    public ResponseEntity<ResponseDto> signIn(@RequestBody SignInDto signInDto) {
-        return ResponseEntity.ok(ResponseDto.of(authService.signIn(signInDto)));
+    @PostMapping("/login")
+    public ResponseEntity<ResponseDto> signIn(@RequestBody LoginDto loginDto) {
+        return ResponseEntity.ok(ResponseDto.of(authService.login(loginDto)));
     }
 
-    @PostMapping("/signup")
-    public ResponseEntity<ResponseDto> signUp(@RequestBody SignUpDto signUpDto) {
-        return ResponseEntity.ok(ResponseDto.of(authService.signUp(signUpDto)));
+    @PostMapping("/register")
+    public ResponseEntity<ResponseDto> signUp(@RequestBody RegisterDto registerDto) {
+        return ResponseEntity.ok(ResponseDto.of(authService.register(registerDto)));
     }
 }

@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
-public class User extends AbstractEntity implements UserDetails {
+public class User extends AbstractEntity{
 
     @Column(updatable = false, nullable = false, unique = true)
     private String username;
@@ -33,34 +33,4 @@ public class User extends AbstractEntity implements UserDetails {
     @Builder.Default
     @Column(nullable = false)
     private boolean enabled = true;
-
-    @Singular
-    @ManyToMany
-    @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    @Column(nullable = false)
-    private Set<Role> authorities;
-
-    public List<String> getAuthorityNames() {
-        return authorities.stream()
-                .map(role -> role.getType().name())
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
 }
