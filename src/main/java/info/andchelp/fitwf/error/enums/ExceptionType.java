@@ -20,10 +20,6 @@ public enum ExceptionType {
 
     INVALID_USERNAME_OR_PASSWORD("invalid.username.or.password"),
     INVALID_TOKEN("invalid.token"),
-    ;
+    VALIDATION_ERROR("validation.error");
     private final String dictionaryCode;
-
-    public String translateException() {
-        return "";
-    }
 }

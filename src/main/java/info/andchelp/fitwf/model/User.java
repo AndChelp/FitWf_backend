@@ -1,36 +1,34 @@
 package info.andchelp.fitwf.model;
 
-import lombok.*;
-import org.springframework.security.core.userdetails.UserDetails;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Setter
 @Getter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
-public class User extends AbstractEntity{
-
-    @Column(updatable = false, nullable = false, unique = true)
-    private String username;
+public class User extends AbstractEntity {
 
     @Column(unique = true, nullable = false)
     private String email;
 
+    @Column(updatable = false, nullable = false, unique = true)
+    private String username;
+
     @Column(nullable = false, length = 60)
     private String password;
 
-    @Builder.Default
     @Column(nullable = false)
     private boolean emailVerified = false;
 
-    @Builder.Default
     @Column(nullable = false)
     private boolean enabled = true;
 }

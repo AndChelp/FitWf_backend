@@ -5,7 +5,7 @@ import info.andchelp.fitwf.dto.request.RegisterDto;
 import info.andchelp.fitwf.dto.response.TokensDto;
 import info.andchelp.fitwf.error.exception.AccessDeniedException;
 import info.andchelp.fitwf.error.exception.DuplicateException;
-import info.andchelp.fitwf.model.Code;
+import info.andchelp.fitwf.mapper.impl.RegisterDtoMapper;
 import info.andchelp.fitwf.model.User;
 import info.andchelp.fitwf.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,35 +22,26 @@ public class AuthService {
     private final MailService mailService;
     private final CodeService codeService;
     private final JwtService jwtService;
+    private final RegisterDtoMapper registerDtoMapper;
+
 
     private final UserRepository userRepository;
 
 
     public AuthService(PasswordEncoder passwordEncoder, UserRepository userRepository, MailService mailService,
-                       CodeService codeService, JwtService jwtService) {
+                       CodeService codeService, JwtService jwtService, RegisterDtoMapper registerDtoMapper) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.mailService = mailService;
         this.codeService = codeService;
         this.jwtService = jwtService;
+        this.registerDtoMapper = registerDtoMapper;
     }
 
     public TokensDto register(RegisterDto registerDto) {
         checkIfExists(registerDto);
-        User user = userRepository.save(User.builder()
-                .email(registerDto.getEmail())
-                .username(registerDto.getUsername())
-                .password(passwordEncoder.encode(registerDto.getPassword()))
-                .build());
-
-        Code code = codeService.emailVerificationCode(user);
-
-        mailService.sendSimpleMessage(user.getEmail(), "Verify your email",
-                "Click link below to verify your email and get all capabilities of FitWF!\n" +
-                        "http://localhost:8080/api/public/code/verify?code=" + code.getCode() +
-                        "\n-----------------------------------------------------------------------------\n" +
-                        "Если вы получили это сообщение, вероятно это мой косяк. Можете спокойно удалить письмо.");
-        return new TokensDto(jwtService.generateToken(user), UUID.randomUUID());
+        userRepository.save(registerDtoMapper.map(registerDto));
+        return null;
     }
 
     public TokensDto login(LoginDto loginDto) {

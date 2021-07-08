@@ -11,19 +11,15 @@ import lombok.Setter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ExceptionDto {
     private ExceptionType type;
-    private String message;
+    private Object details;
     private String klass;
 
-    public static ExceptionDto of(ExceptionType type) {
-        return of(type, type.translateException());
+    public static ExceptionDto of(ExceptionType type, Object details) {
+        return of(type, details, null);
     }
 
-    public static ExceptionDto of(ExceptionType type, String message) {
-        return of(type, message, null);
-    }
-
-    public static ExceptionDto of(ExceptionType type, String message, String klass) {
-        return new ExceptionDto(type, message, klass);
+    public static ExceptionDto of(ExceptionType type, Object details, String klass) {
+        return new ExceptionDto(type, details, klass);
     }
 
 }
