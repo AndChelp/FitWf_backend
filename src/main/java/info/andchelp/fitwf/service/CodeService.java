@@ -9,9 +9,7 @@ import info.andchelp.fitwf.repository.CodeRepository;
 import info.andchelp.fitwf.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.time.Duration;
-import java.time.Instant;
 import java.util.UUID;
 
 @Service
@@ -45,7 +43,6 @@ public class CodeService {
                 .user(user)
                 .code(UUID.randomUUID())
                 .type(codeType)
-                .expires_at(new Timestamp(Instant.now().plus(duration).toEpochMilli()))
                 .build());
     }
 
