@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: ${auto.generated.jdbc.url}
+    username: ${auto.generated.username}
+    password: ${auto.generated.password}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        default_schema: public
+server:
+  port: ${auto.generated.port}

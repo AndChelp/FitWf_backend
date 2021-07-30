@@ -1,10 +1,9 @@
 package info.andchelp.fitwf.error;
 
-import info.andchelp.fitwf.dto.response.ExceptionDto;
-import info.andchelp.fitwf.error.enums.ExceptionType;
+import info.andchelp.fitwf.dto.response.ResponseDto;
+import info.andchelp.fitwf.error.enums.ExceptionCode;
 import info.andchelp.fitwf.error.exception.AbstractException;
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,16 +29,16 @@ public class GlobalExceptionHandler extends AbstractHandler {
     @RequestMapping("${server.error.path:${error.path:/error}}")
     @ExceptionHandler({Exception.class})
     public ResponseEntity<Object> defaultExceptionHandler(Exception thr, WebRequest request) {
-        Exception t = (Exception) request.getAttribute("javax.servlet.error.exception", 0);
-        return new ResponseEntity<>("Все плохо", HttpStatus.INTERNAL_SERVER_ERROR);
+        // Exception t = (Exception) request.getAttribute("javax.servlet.error.exception", 0);
+        return new ResponseEntity<>(localizedMessageFor(ExceptionCode.DEFAULT), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler({AbstractException.class})
     public ResponseEntity<Object> abstractExceptionHandler(AbstractException ex) {
         return new ResponseEntity<>(
-                ExceptionDto.of(
-                        ex.getType(),
-                        messageSource.getMessage(ex.getType().getDictionaryCode(), null, LocaleContextHolder.getLocale())
+                ResponseDto.ofError(
+                        ex.getExceptionCode(),
+                        localizedMessageFor(ex.getExceptionCode())
                 ), HttpStatus.OK);
     }
 
@@ -51,6 +50,6 @@ public class GlobalExceptionHandler extends AbstractHandler {
             String errorMessage = error.getDefaultMessage();
             validationErrors.put(fieldName, errorMessage);
         });
-        return new ResponseEntity<>(ExceptionDto.of(ExceptionType.VALIDATION_ERROR, validationErrors), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(ResponseDto.ofError(ExceptionCode.VALIDATION_ERROR, validationErrors), HttpStatus.BAD_REQUEST);
     }
 }

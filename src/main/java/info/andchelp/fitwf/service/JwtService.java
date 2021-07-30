@@ -12,7 +12,6 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class JwtService {
