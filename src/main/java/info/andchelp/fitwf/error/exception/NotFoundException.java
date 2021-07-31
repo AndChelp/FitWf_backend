@@ -1,6 +1,6 @@
 package info.andchelp.fitwf.error.exception;
 
-import info.andchelp.fitwf.error.enums.ExceptionCode;
+import info.andchelp.fitwf.dictionary.ExceptionCode;
 
 public class NotFoundException extends AbstractException {
     private NotFoundException(String exceptionCode) {

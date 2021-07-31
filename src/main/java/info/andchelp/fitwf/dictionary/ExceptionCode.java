@@ -1,4 +1,4 @@
-package info.andchelp.fitwf.error.enums;
+package info.andchelp.fitwf.dictionary;
 
 public interface ExceptionCode {
     String DEFAULT = "default";

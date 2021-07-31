@@ -17,7 +17,7 @@ public class FitwfApplication {
     @Bean
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename("classpath:dictionary/exception");
+        messageSource.setBasenames("classpath:dictionary/exception", "classpath:dictionary/mail");
         messageSource.setFallbackToSystemLocale(false);
         messageSource.setDefaultEncoding("windows-1251");
         return messageSource;

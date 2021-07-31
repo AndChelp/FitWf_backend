@@ -1,5 +1,6 @@
-package info.andchelp.fitwf.security;
+package info.andchelp.fitwf.config;
 
+import info.andchelp.fitwf.security.JwtAuthenticationTokenFilter;
 import info.andchelp.fitwf.service.JwtService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

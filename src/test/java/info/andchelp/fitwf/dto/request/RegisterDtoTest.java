@@ -1,6 +1,6 @@
 package info.andchelp.fitwf.dto.request;
 
-import info.andchelp.fitwf.error.enums.ExceptionCode;
+import info.andchelp.fitwf.dictionary.ExceptionCode;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

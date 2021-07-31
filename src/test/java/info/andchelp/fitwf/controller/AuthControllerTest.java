@@ -3,9 +3,9 @@ package info.andchelp.fitwf.controller;
 import info.andchelp.fitwf.Requests;
 import info.andchelp.fitwf.TestConfiguration;
 import info.andchelp.fitwf.URIs;
+import info.andchelp.fitwf.dictionary.ExceptionCode;
 import info.andchelp.fitwf.dto.request.RegisterDto;
 import info.andchelp.fitwf.dto.response.ResponseDto;
-import info.andchelp.fitwf.error.enums.ExceptionCode;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
 

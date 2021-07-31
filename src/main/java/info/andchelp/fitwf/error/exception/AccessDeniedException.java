@@ -1,6 +1,6 @@
 package info.andchelp.fitwf.error.exception;
 
-import info.andchelp.fitwf.error.enums.ExceptionCode;
+import info.andchelp.fitwf.dictionary.ExceptionCode;
 
 public class AccessDeniedException extends AbstractException {
     private AccessDeniedException(String exceptionCode) {

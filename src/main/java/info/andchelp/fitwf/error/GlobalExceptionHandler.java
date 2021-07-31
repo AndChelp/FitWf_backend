@@ -1,9 +1,9 @@
 package info.andchelp.fitwf.error;
 
+import info.andchelp.fitwf.dictionary.ExceptionCode;
+import info.andchelp.fitwf.dictionary.MessageSourceUtil;
 import info.andchelp.fitwf.dto.response.ResponseDto;
-import info.andchelp.fitwf.error.enums.ExceptionCode;
 import info.andchelp.fitwf.error.exception.AbstractException;
-import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +19,9 @@ import java.util.Map;
 
 @ControllerAdvice
 @Controller
-
 public class GlobalExceptionHandler extends AbstractHandler {
 
-    protected GlobalExceptionHandler(MessageSource messageSource) {
+    protected GlobalExceptionHandler(MessageSourceUtil messageSource) {
         super(messageSource);
     }
 
@@ -30,7 +29,7 @@ public class GlobalExceptionHandler extends AbstractHandler {
     @ExceptionHandler({Exception.class})
     public ResponseEntity<Object> defaultExceptionHandler(Exception thr, WebRequest request) {
         // Exception t = (Exception) request.getAttribute("javax.servlet.error.exception", 0);
-        return new ResponseEntity<>(localizedMessageFor(ExceptionCode.DEFAULT), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(messageSource.getMessage(ExceptionCode.DEFAULT), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler({AbstractException.class})
@@ -38,7 +37,7 @@ public class GlobalExceptionHandler extends AbstractHandler {
         return new ResponseEntity<>(
                 ResponseDto.ofError(
                         ex.getExceptionCode(),
-                        localizedMessageFor(ex.getExceptionCode())
+                        messageSource.getMessage(ex.getExceptionCode())
                 ), HttpStatus.OK);
     }
 

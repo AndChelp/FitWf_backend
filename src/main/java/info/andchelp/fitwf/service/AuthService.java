@@ -8,8 +8,10 @@ import info.andchelp.fitwf.error.exception.DuplicateException;
 import info.andchelp.fitwf.mapper.impl.RegisterDtoMapper;
 import info.andchelp.fitwf.model.User;
 import info.andchelp.fitwf.repository.UserRepository;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -38,9 +40,11 @@ public class AuthService {
         this.registerDtoMapper = registerDtoMapper;
     }
 
+    @Transactional
     public TokensDto register(RegisterDto registerDto) {
         checkIfExists(registerDto);
-        userRepository.save(registerDtoMapper.map(registerDto));
+        User savedUser = userRepository.save(registerDtoMapper.map(registerDto));
+        mailService.sendRegistrationCode(savedUser.getEmail(), LocaleContextHolder.getLocale());
         return null;
     }
 

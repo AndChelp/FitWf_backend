@@ -1,6 +1,6 @@
 package info.andchelp.fitwf.dto.request;
 
-import info.andchelp.fitwf.error.enums.ExceptionCode;
+import info.andchelp.fitwf.dictionary.ExceptionCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
