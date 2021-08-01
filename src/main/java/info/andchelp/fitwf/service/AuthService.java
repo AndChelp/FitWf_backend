@@ -44,7 +44,7 @@ public class AuthService {
     public TokensDto register(RegisterDto registerDto) {
         checkIfExists(registerDto);
         User savedUser = userRepository.save(registerDtoMapper.map(registerDto));
-        mailService.sendRegistrationCode(savedUser.getEmail(), LocaleContextHolder.getLocale());
+        mailService.sendRegistrationCode(savedUser.getEmail(), savedUser.getUsername(), LocaleContextHolder.getLocale());
         return null;
     }
 

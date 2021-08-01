@@ -36,11 +36,11 @@ public class MailService {
 
     @Async
     @SneakyThrows
-    public void sendRegistrationCode(String recipient, Locale locale) {
+    public void sendRegistrationCode(String email, String username, Locale locale) {
         Template template = configuration.getTemplate(Templates.SUCCESSFUL_REGISTRATION, locale);
-        String body = FreeMarkerTemplateUtils.processTemplateIntoString(template, Map.of());
+        String body = FreeMarkerTemplateUtils.processTemplateIntoString(template, Map.of("username", username, "buttonUrl", "fitwf.com"));
         String subject = messageSourceUtil.getMessage(MailMessageCode.SUCCESSFUL_REGISTRATION_TITLE, locale);
-        emailSender.send(prepareMessage(recipient, subject, body));
+        emailSender.send(prepareMessage(email, subject, body));
     }
 
     private MimeMessage prepareMessage(String recipient, String subject, String htmlBody) throws MessagingException {
