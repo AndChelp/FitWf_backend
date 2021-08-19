@@ -3,11 +3,9 @@ package info.andchelp.fitwf.dto.response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.UUID;
-
 @Getter
 @AllArgsConstructor
-public class TokensDto {
+public class PairAuthTokens {
     private final String accessToken;
-    private final UUID refreshToken;
+    private final String refreshToken;
 }

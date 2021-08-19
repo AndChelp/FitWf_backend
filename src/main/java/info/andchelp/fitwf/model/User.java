@@ -1,21 +1,22 @@
 package info.andchelp.fitwf.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.security.Principal;
+import java.sql.Timestamp;
+import java.time.Instant;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
-@Table(name = "users")
-public class User extends AbstractEntity {
+@Table(name = "user")
+public class User extends AbstractEnabledEntity implements Principal {
 
     @Column(unique = true, nullable = false)
     private String email;
@@ -29,6 +30,16 @@ public class User extends AbstractEntity {
     @Column(nullable = false)
     private boolean emailVerified = false;
 
-    @Column(nullable = false)
-    private boolean enabled = true;
+    @Column
+    private Timestamp emailVerifiedAt;
+
+    public void verifyEmail() {
+        this.emailVerified = true;
+        this.emailVerifiedAt = Timestamp.from(Instant.now());
+    }
+
+    @Override
+    public String getName() {
+        return getUsername();
+    }
 }

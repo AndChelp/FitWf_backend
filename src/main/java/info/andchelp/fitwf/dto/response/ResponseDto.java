@@ -2,6 +2,7 @@ package info.andchelp.fitwf.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
+import org.springframework.http.ResponseEntity;
 
 import java.sql.Timestamp;
 
@@ -17,8 +18,12 @@ public class ResponseDto {
         this.result = result;
     }
 
-    public static ResponseDto ofSuccess(Object value) {
-        return new ResponseDto(ResponseType.SUCCESS, value);
+    public static ResponseDto ofSuccess() {
+        return new ResponseDto(ResponseType.SUCCESS, null);
+    }
+
+    public static ResponseEntity<ResponseDto> ofSuccess(Object value) {
+        return ResponseEntity.ok(new ResponseDto(ResponseType.SUCCESS, value));
     }
 
     public static ResponseDto ofError(String exceptionCode, Object details) {

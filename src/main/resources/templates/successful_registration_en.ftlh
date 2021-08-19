@@ -45,7 +45,7 @@
                             <tr>
                                 <td style="background-color:#3F4954; padding: 0 0 45px 0; border: 2px solid #2A323B;  border-radius: 0 0 15px 15px; border-top-style: none">
 
-                                    <a href="${buttonUrl}" target="_blank"
+                                    <a href="${buttonLink}" target="_blank"
                                        style="text-decoration: none; background: #928FEF; padding: 15px; font: 18px Verdana; color: #1c2128; border-radius: 5px">
                                         <strong>Confirm email</strong>
                                     </a>

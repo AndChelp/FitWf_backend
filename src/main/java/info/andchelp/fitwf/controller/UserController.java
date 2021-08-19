@@ -1,6 +1,8 @@
 package info.andchelp.fitwf.controller;
 
+import info.andchelp.fitwf.dto.response.ResponseDto;
 import info.andchelp.fitwf.service.AuthService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,9 +16,9 @@ public class UserController {
         this.authService = authService;
     }
 
-    @DeleteMapping("/signout")
-    public String signOut() {
-        authService.signOut();
-        return "K";
+    @DeleteMapping("/logout")
+    public ResponseEntity<ResponseDto> logout() {
+        authService.logout();
+        return ResponseEntity.ok(ResponseDto.ofSuccess());
     }
 }

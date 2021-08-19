@@ -38,5 +38,15 @@ spring:
 
 jwt:
   token:
-    secret: secret
+    secret: secret1asfsafsavsdvdsvsdvdsvdsvdsvdsvsdvwe23f23v32f2f32f23f23f2f2f32ff23f32f
+    access:
+      duration: 5
+      chronoUnit: MINUTES
+    refresh:
+      duration: 30
+      chronoUnit: DAYS
+    verify:
+      email:
+        duration: 7
+        chronoUnit: DAYS
 

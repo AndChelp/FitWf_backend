@@ -1,5 +1,6 @@
 package info.andchelp.fitwf.controller;
 
+import info.andchelp.fitwf.dto.request.LoginDto;
 import info.andchelp.fitwf.dto.request.RegisterDto;
 import info.andchelp.fitwf.dto.response.ResponseDto;
 import info.andchelp.fitwf.service.AuthService;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/public/auth")
+@RequestMapping("/api/auth")
 public class AuthController {
 
     private final AuthService authService;
@@ -21,13 +22,13 @@ public class AuthController {
         this.authService = authService;
     }
 
-    /* @PostMapping("/login")
-     public ResponseEntity<ResponseDto> login(@RequestBody LoginDto loginDto) {
-         return ResponseEntity.ok(ResponseDto.of(authService.login(loginDto)));
-     }
- */
+    @PostMapping("/login")
+    public ResponseEntity<ResponseDto> login(@RequestBody LoginDto loginDto) {
+        return ResponseDto.ofSuccess(authService.login(loginDto));
+    }
+
     @PostMapping("/register")
     public ResponseEntity<ResponseDto> register(@Valid @RequestBody RegisterDto registerDto) {
-        return ResponseEntity.ok(ResponseDto.ofSuccess(authService.register(registerDto)));
+        return ResponseDto.ofSuccess(authService.register(registerDto));
     }
 }

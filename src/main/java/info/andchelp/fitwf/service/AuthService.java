@@ -2,58 +2,61 @@ package info.andchelp.fitwf.service;
 
 import info.andchelp.fitwf.dto.request.LoginDto;
 import info.andchelp.fitwf.dto.request.RegisterDto;
-import info.andchelp.fitwf.dto.response.TokensDto;
+import info.andchelp.fitwf.dto.response.PairAuthTokens;
 import info.andchelp.fitwf.error.exception.AccessDeniedException;
 import info.andchelp.fitwf.error.exception.DuplicateException;
-import info.andchelp.fitwf.mapper.impl.RegisterDtoMapper;
 import info.andchelp.fitwf.model.User;
+import info.andchelp.fitwf.model.enums.MailMessageType;
+import info.andchelp.fitwf.repository.RevokedTokenRepository;
 import info.andchelp.fitwf.repository.UserRepository;
+import info.andchelp.fitwf.security.jwt.JwtAuthenticationToken;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.UUID;
 
 @Service
 public class AuthService {
 
 
     private final PasswordEncoder passwordEncoder;
+    private final RevokedTokenRepository revokedTokenRepository;
 
     private final MailService mailService;
-    private final CodeService codeService;
-    private final JwtService jwtService;
-    private final RegisterDtoMapper registerDtoMapper;
-
+    private final TokenService tokenService;
 
     private final UserRepository userRepository;
 
 
-    public AuthService(PasswordEncoder passwordEncoder, UserRepository userRepository, MailService mailService,
-                       CodeService codeService, JwtService jwtService, RegisterDtoMapper registerDtoMapper) {
+    public AuthService(PasswordEncoder passwordEncoder, RevokedTokenRepository revokedTokenRepository, UserRepository userRepository, MailService mailService,
+                       TokenService tokenService) {
+        this.revokedTokenRepository = revokedTokenRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.mailService = mailService;
-        this.codeService = codeService;
-        this.jwtService = jwtService;
-        this.registerDtoMapper = registerDtoMapper;
+        this.tokenService = tokenService;
     }
 
     @Transactional
-    public TokensDto register(RegisterDto registerDto) {
+    public PairAuthTokens register(RegisterDto registerDto) {
         checkIfExists(registerDto);
-        User savedUser = userRepository.save(registerDtoMapper.map(registerDto));
-        mailService.sendRegistrationCode(savedUser.getEmail(), savedUser.getUsername(), LocaleContextHolder.getLocale());
-        return null;
+        User user = userRepository.save(User.builder()
+                .email(registerDto.getEmail())
+                .username(registerDto.getUsername())
+                .password(passwordEncoder.encode(registerDto.getPassword()))
+                .build());
+        mailService.sendVerifyRegistrationLink(user, LocaleContextHolder.getLocale(), MailMessageType.SUCCESSFUL_REGISTRATION);
+        return tokenService.createPairAuthTokens(user);
     }
 
-    public TokensDto login(LoginDto loginDto) {
+    public PairAuthTokens login(LoginDto loginDto) {
         User user = userRepository.findByUsername(loginDto.getUsername())
                 .filter(u -> passwordEncoder.matches(loginDto.getPassword(), u.getPassword()))
                 .orElseThrow(AccessDeniedException::ofUsernameOrPassword);
-        return new TokensDto(jwtService.generateToken(user), UUID.randomUUID());
+        return tokenService.createPairAuthTokens(user);
     }
+
 
     private void checkIfExists(RegisterDto registerDto) {
         boolean existsByEmail = userRepository.existsByEmail(registerDto.getEmail());
@@ -67,7 +70,8 @@ public class AuthService {
         }
     }
 
-    public void signOut() {
-        //FitWfSecurityContext.getUser()
+    public void logout() {
+        JwtAuthenticationToken auth = (JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        tokenService.revokeToken(auth.getCredentials().getRefreshJti(), auth.getPrincipal());
     }
 }
