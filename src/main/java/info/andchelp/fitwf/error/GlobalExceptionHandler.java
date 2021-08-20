@@ -6,6 +6,7 @@ import info.andchelp.fitwf.dictionary.MessageSourceUtil;
 import info.andchelp.fitwf.dto.response.ResponseDto;
 import info.andchelp.fitwf.error.exception.AbstractException;
 import info.andchelp.fitwf.error.exception.AccessDeniedException;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +25,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @ControllerAdvice
 @Controller
-public class GlobalExceptionHandler extends AbstractHandler {
+public class GlobalExceptionHandler extends AbstractHandler implements ErrorController {
     private final HandlerExceptionResolver handlerExceptionResolver;
 
     protected GlobalExceptionHandler(MessageSourceUtil messageSource, HandlerExceptionResolver handlerExceptionResolver) {
@@ -36,16 +38,18 @@ public class GlobalExceptionHandler extends AbstractHandler {
     }
 
     @RequestMapping("${server.error.path:${error.path:/error}}")
-    public void defaultExceptionHandler(HttpServletRequest request, HttpServletResponse response) {
-        handlerExceptionResolver.resolveException(request, response, null, (Exception) request.getAttribute(RequestDispatcher.ERROR_EXCEPTION));
+    public void defaultExceptionHandler(Exception ex, HttpServletRequest request, HttpServletResponse response) {
+        Exception attribute = (Exception) request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
+        handlerExceptionResolver.resolveException(request, response, null, Objects.nonNull(attribute) ? attribute : ex);
     }
 
     @ExceptionHandler({Exception.class})
-    public ResponseEntity<ResponseDto> defaultExceptionHandler() {
+    public ResponseEntity<ResponseDto> defaultExceptionHandler(HttpServletRequest request) {
+        HttpStatus status = getStatus(request);
         return ResponseDto.ofError(
                 ExceptionCode.DEFAULT,
-                messageSource.getMessage(ExceptionCode.DEFAULT),
-                HttpStatus.INTERNAL_SERVER_ERROR);
+                status.getReasonPhrase(),
+                status);
     }
 
     @ExceptionHandler({AbstractException.class})

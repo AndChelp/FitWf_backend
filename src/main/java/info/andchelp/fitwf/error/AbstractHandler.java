@@ -11,7 +11,10 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-public abstract class AbstractHandler extends ResponseEntityExceptionHandler implements ErrorController {
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpServletRequest;
+
+public abstract class AbstractHandler extends ResponseEntityExceptionHandler{
 
     protected final MessageSourceUtil messageSource;
 
@@ -34,5 +37,17 @@ public abstract class AbstractHandler extends ResponseEntityExceptionHandler imp
         return super.handleExceptionInternal(ex, responseDto, headers, status, request);
     }
 
+    protected HttpStatus getStatus(HttpServletRequest request) {
+        Integer statusCode = (Integer) request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+        if (statusCode == null) {
+            return HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        try {
+            return HttpStatus.valueOf(statusCode);
+        }
+        catch (Exception ex) {
+            return HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+    }
 
 }
