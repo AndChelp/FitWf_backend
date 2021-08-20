@@ -11,7 +11,4 @@ public class NotFoundException extends AbstractException {
         return new NotFoundException(ExceptionCode.USER_NOT_FOUND);
     }
 
-    public static NotFoundException ofCode() {
-        return new NotFoundException(ExceptionCode.CODE_NOT_FOUND);
-    }
 }

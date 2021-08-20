@@ -1,6 +1,5 @@
 package info.andchelp.fitwf.security.jwt;
 
-import info.andchelp.fitwf.dictionary.ClaimKey;
 import info.andchelp.fitwf.error.exception.AccessDeniedException;
 import info.andchelp.fitwf.error.exception.NotFoundException;
 import info.andchelp.fitwf.model.User;
@@ -33,7 +32,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         JwtWrapper decodedJWT = tokenService.extractBearerToken(request);
         if (Objects.nonNull(decodedJWT)) {
-            UUID tokenJti = decodedJWT.getClaim(ClaimKey.REFRESH_JTI).as(UUID.class);
+            UUID tokenJti = decodedJWT.getRefreshJti();
             User user = userRepository.findById(decodedJWT.getUserId())
                     .orElseThrow(NotFoundException::ofUser);
             if (revokedTokenRepository.existsByRefreshJtiAndUser(tokenJti, user)) {

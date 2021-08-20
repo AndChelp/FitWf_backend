@@ -9,9 +9,10 @@ public interface ExceptionCode {
     String EMAIL_AND_USERNAME_EXISTS = "email.and.username.exists";
 
     String USER_NOT_FOUND = "user.not.found";
-    String CODE_NOT_FOUND = "code.not.found";
 
     String USER_IS_VERIFIED = "user.is.verified";
+
+    String JWT_TOKEN_EXCEPTION = "jwt.token.exception";
 
     String INVALID_USERNAME_OR_PASSWORD = "invalid.username.or.password";
     String INVALID_TOKEN = "invalid.token";
