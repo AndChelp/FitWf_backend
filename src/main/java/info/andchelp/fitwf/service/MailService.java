@@ -3,6 +3,7 @@ package info.andchelp.fitwf.service;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import info.andchelp.fitwf.dictionary.MessageSourceUtil;
+import info.andchelp.fitwf.error.exception.IllegalArgumentException;
 import info.andchelp.fitwf.model.MailMessage;
 import info.andchelp.fitwf.model.User;
 import info.andchelp.fitwf.model.enums.MailMessageType;
@@ -52,8 +53,11 @@ public class MailService {
 
     @Async
     public void sendVerifyRegistrationLink(User user, Locale locale, MailMessageType type) {
+        if (user.isEmailVerified()) {
+            throw IllegalArgumentException.ofMailVerify(user.getUsername());
+        }
         if (checkMaxMessagesAfter(user, MAX_REGISTRATION_MESSAGES, LAST_DAY)) {
-            System.out.println("Превышено максимальное кол-во сообщений за период");//todo: logger
+            System.out.println("Превышено максимальное кол-во писем за период");//todo: logger
             return;
         }
         String token = tokenService.createSignedToken(user, TokenType.EMAIL_VERIFY);

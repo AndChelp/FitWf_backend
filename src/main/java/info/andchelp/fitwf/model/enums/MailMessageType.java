@@ -8,7 +8,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum MailMessageType {
-    SUCCESSFUL_REGISTRATION(Templates.SUCCESSFUL_REGISTRATION, MailMessageCode.SUCCESSFUL_REGISTRATION_TITLE);
+    SUCCESSFUL_REGISTRATION(Templates.SUCCESSFUL_REGISTRATION, MailMessageCode.SUCCESSFUL_REGISTRATION_TITLE),
+    VERIFY_EMAIL(Templates.VERIFY_EMAIL, MailMessageCode.VERIFY_EMAIL_TITLE);
 
     private String template;
     private String title;
