@@ -1,14 +1,15 @@
 package info.andchelp.fitwf;
 
+import info.andchelp.fitwf.dto.request.RegisterDto;
 import io.restassured.http.ContentType;
 import io.restassured.http.Method;
 import io.restassured.response.ValidatableResponse;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpStatus;
 
 import static io.restassured.RestAssured.given;
 
 public class Requests {
-
 
     public static ValidatableResponse request(Method method, String uri, int status, Object body) {
         return given()
@@ -25,5 +26,16 @@ public class Requests {
 
     public static ValidatableResponse post(String uri, int status, Object body) {
         return request(Method.POST, uri, status, body);
+    }
+
+    public static RegisterDto registerNewUser() {
+        String email = RandomStringUtils.randomAlphanumeric(6) + "@"
+                + RandomStringUtils.randomAlphanumeric(6) + "."
+                + RandomStringUtils.randomAlphanumeric(3);
+        String username = RandomStringUtils.randomAlphanumeric(15);
+        String password = RandomStringUtils.randomAlphanumeric(15);
+        RegisterDto registerDto = new RegisterDto(email, username, password);
+        Requests.post(URIs.REGISTER, registerDto);
+        return registerDto;
     }
 }

@@ -9,5 +9,8 @@ spring:
     properties:
       hibernate:
         default_schema: public
+  mail:
+    host: none
+
 server:
   port: ${auto.generated.port}

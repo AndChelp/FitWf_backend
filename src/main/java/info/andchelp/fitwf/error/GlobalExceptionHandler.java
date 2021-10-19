@@ -44,7 +44,8 @@ public class GlobalExceptionHandler extends AbstractHandler implements ErrorCont
     }
 
     @ExceptionHandler({Exception.class})
-    public ResponseEntity<ResponseDto> defaultExceptionHandler(HttpServletRequest request) {
+    public ResponseEntity<ResponseDto> defaultExceptionHandler(Exception ex, HttpServletRequest request) {
+        ex.printStackTrace();
         HttpStatus status = getStatus(request);
         return ResponseDto.ofError(
                 ExceptionCode.DEFAULT,
